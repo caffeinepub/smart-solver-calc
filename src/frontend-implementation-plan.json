@@ -1,0 +1,279 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Smart Solver Calc (Math/Physics/Chemistry step-by-step)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a multi-mode solver UI (Math/Physics/Chemistry) with structured inputs and step-by-step + final answer rendering.",
+      "acceptanceCriteria": [
+        "The home screen offers three clear modes: Math, Physics, Chemistry.",
+        "Each mode provides an input area and a “Solve” action.",
+        "The result area renders: (1) final answer, (2) step-by-step explanation, and (3) any intermediate computed values used.",
+        "User-facing text is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app shell layout: header (branding + navigation), main content area with the solver modes (Math/Physics/Chemistry), and a shared results panel region. Ensure all user-facing text is English."
+        },
+        {
+          "path": "frontend/src/components/ModeSelector.tsx",
+          "operation": "create",
+          "description": "Create a mode selector UI (Math/Physics/Chemistry) for the landing/selection area. Use the shadcn-ui component library (e.g., tabs/segmented controls/cards) to provide consistent interactive styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/results/SolutionPanel.tsx",
+          "operation": "create",
+          "description": "Create a reusable solution renderer that displays final answer, steps, and intermediate computed values using the backend Result/Step/Answer shape. Use shadcn-ui components (e.g., card, separators, alerts) for consistent presentation. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/inputs/MathSolverForm.tsx",
+          "operation": "create",
+          "description": "Create the Math mode input UI supporting free-text expression entry and a Solve action; emits a typed Input payload for runCalculation. Use shadcn-ui form controls. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "operation": "create",
+          "description": "Create the Physics mode UI with a topic selector and dynamic form fields per selected topic; supports choosing an unknown (solve-for variable) while providing the others. Use shadcn-ui select/inputs. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "operation": "create",
+          "description": "Create the Chemistry mode UI with a topic selector and dynamic form fields per topic; includes validation messaging and a Solve action. Use shadcn-ui select/inputs. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/common/States.tsx",
+          "operation": "create",
+          "description": "Create shared Loading / Error / Empty state components used by solver panels and history, ensuring consistent styling and English copy. Use shadcn-ui alert/skeleton where appropriate. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Render math solving steps in a readable monospaced/code-like style and support re-solve flows for math expressions.",
+      "acceptanceCriteria": [
+        "User can submit expressions like \"(2+3)*4^2\" and receive a correct final result.",
+        "User can submit expressions like \"sqrt(16)+sin(pi/2)\" and receive a correct final result.",
+        "Returned steps show a clear evaluation sequence (at least: parsed form and key reduction steps).",
+        "Frontend renders math steps in a readable monospaced/code-like style."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/results/MathSteps.tsx",
+          "operation": "create",
+          "description": "Create a math-specific steps renderer that displays parse/evaluation steps in a monospaced/code-like style and highlights key reductions and intermediate results (based on Step fields). Use shadcn-ui typography utilities (or card content) for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/results/SolutionPanel.tsx",
+          "operation": "modify",
+          "description": "Integrate MathSteps for math-mode solutions; ensure intermediate computed values (e.g., Step.result, Step.calculation) are shown when present, and the final answer is displayed clearly."
+        },
+        {
+          "path": "frontend/src/components/inputs/MathSolverForm.tsx",
+          "operation": "modify",
+          "description": "Add client-side validation for empty/invalid expressions before submission and support a 'Re-solve' action that reuses the last successful inputs (leveraging React Query cache behavior)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Provide physics topic-based forms with solve-for selection and unit-aware outputs rendered with step-by-step derivations.",
+      "acceptanceCriteria": [
+        "Physics mode offers a topic selector and shows only the inputs needed for that topic.",
+        "Users can solve for any one variable when the others are provided (e.g., compute a from F and m; compute t from s, v, a where applicable).",
+        "Outputs include units in the final answer string (e.g., N, m/s^2, J, W, V, A, Ω).",
+        "Steps include the formula used, substitution of numeric values, and the final computation."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/inputs/physics/physicsTopics.ts",
+          "operation": "create",
+          "description": "Define a frontend configuration map for PhysicsTopic -> required variables, labels, and default units hints for kinematics, Newton’s second law, work/energy, power, and Ohm’s law (used to drive dynamic forms)."
+        },
+        {
+          "path": "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "operation": "modify",
+          "description": "Implement a topic selector (backed by backend listPhysicsTopics or local enum) and render only the inputs required for the selected topic. Add a 'Solve for' control that ensures exactly one variable is unknown and validates remaining inputs as numbers."
+        },
+        {
+          "path": "frontend/src/components/results/SolutionPanel.tsx",
+          "operation": "modify",
+          "description": "Ensure physics solutions display a unit-aware final answer (e.g., append units from Answer.units when present) and present steps emphasizing formula, substitution, and computed result."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Provide chemistry topic-based forms with validation and step-by-step reasoning, including molar mass and pH-related tools.",
+      "acceptanceCriteria": [
+        "Chemistry mode offers a topic selector with dedicated inputs per topic.",
+        "Molar mass supports common element symbols and computes total molar mass for a chemical formula (e.g., H2O, CO2, NaCl).",
+        "Molarity/dilution/ideal gas/pH solvers return correct numeric outputs and show steps with formula and substitution.",
+        "Validation errors (missing inputs, invalid chemical formula, invalid numbers) are shown clearly in the UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+          "operation": "create",
+          "description": "Define a frontend configuration map for ChemistryTopic -> required fields, labels, and units hints for molar mass, moles/mass conversion, molarity, dilution, ideal gas law, and pH/pOH."
+        },
+        {
+          "path": "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "operation": "modify",
+          "description": "Implement topic selector and dedicated dynamic inputs per topic. Add input validation for missing/invalid numbers and invalid chemical formula text for molar mass; show clear inline error messages."
+        },
+        {
+          "path": "frontend/src/components/results/SolutionPanel.tsx",
+          "operation": "modify",
+          "description": "Ensure chemistry solutions display final answer and steps in a structured, readable way, including any intermediate computed values provided by Step fields."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add authenticated history view with Internet Identity sign-in, profile setup, and history list actions (re-run, delete, clear).",
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and see a “History” view.",
+        "Each history item shows mode + summary + timestamp + final answer.",
+        "Users can re-run a history item to repopulate the solver inputs and re-solve.",
+        "Users can delete individual items and clear all history."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an authentication gate that requires Internet Identity login before showing history/personal data screens, and shows a friendly access-denied/login prompt when unauthenticated. Use the authorization component patterns for login state handling and authorization error handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Create a first-login profile setup dialog that asks for a user name and saves it using getCallerUserProfile/saveCallerUserProfile. Follow the authorization component guidance to prevent modal flash. Use shadcn-ui dialog/form components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using the authorization component’s Internet Identity flow patterns and ensure React Query cache is cleared on logout. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/HistoryPage.tsx",
+          "operation": "create",
+          "description": "Create the History view (behind AuthGate) that lists solved items with mode, summary, timestamp, and final answer; provides actions to re-run (repopulate solver inputs and re-solve), delete item, and clear all."
+        },
+        {
+          "path": "frontend/src/components/history/HistoryList.tsx",
+          "operation": "create",
+          "description": "Create a history list component with item rows, action buttons (Re-run/Delete), and an overall Clear All control. Use shadcn-ui table/list/card and confirmation dialog components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/history/historySummary.ts",
+          "operation": "create",
+          "description": "Implement client-side summarization of history inputs (Input union) into a short English summary string suitable for list display (e.g., mode + topic + key values)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the HistoryPage into navigation (e.g., header nav item) and ensure the page is reachable. Ensure history-related UI is only accessible when authenticated via AuthGate."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Apply a modern scientific visual theme (non-blue/purple) with consistent styling across all states.",
+      "acceptanceCriteria": [
+        "Theme is applied consistently across navigation, forms, buttons, and result panels.",
+        "Primary palette is not blue/purple; it reads as “scientific calculator” (e.g., charcoal + lime/amber accents, or graphite + teal-green accents).",
+        "Loading, error, and empty states are styled and visually consistent."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and CSS variables to implement a coherent scientific theme (e.g., charcoal/graphite base with lime/amber accents; avoid blue/purple). Ensure typography, spacing, and component surfaces (cards/panels) are consistent across screens and states."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions (via existing CSS variable-based color tokens) as needed to align with the new scientific palette and ensure consistent component styling."
+        },
+        {
+          "path": "frontend/src/components/common/States.tsx",
+          "operation": "modify",
+          "description": "Ensure loading/error/empty state components match the new theme and are used consistently across solver and history views."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Use React Query for solver and history data flow with loading, errors, validation, caching, and manual re-fetch (Re-solve).",
+      "acceptanceCriteria": [
+        "Solver requests show a loading state and disable the Solve button while pending.",
+        "Errors from backend are displayed in a user-friendly way and do not crash the app.",
+        "React Query caches the latest successful solution per mode/topic and supports manual re-fetch (Re-solve)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/api/solver.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for runCalculation (by mode/topic) that use useActor and provide loading/error states and cache keys that preserve the latest successful solution per mode/topic."
+        },
+        {
+          "path": "frontend/src/api/history.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for getHistory, getHistoryItem, reRunHistoryItem, deleteHistoryItem, and clearHistory using useActor; ensure proper invalidation/refetch after mutations."
+        },
+        {
+          "path": "frontend/src/components/inputs/MathSolverForm.tsx",
+          "operation": "modify",
+          "description": "Wire the Math form to the solver React Query mutation; disable Solve while pending, show validation before submit, render backend errors in a user-friendly panel, and offer a Re-solve action."
+        },
+        {
+          "path": "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "operation": "modify",
+          "description": "Wire the Physics form to solver React Query; provide clear loading state, disable Solve while pending, show validation errors before submit, and offer Re-solve."
+        },
+        {
+          "path": "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "operation": "modify",
+          "description": "Wire the Chemistry form to solver React Query; provide clear loading state, disable Solve while pending, show validation errors before submit, and offer Re-solve."
+        },
+        {
+          "path": "frontend/src/pages/HistoryPage.tsx",
+          "operation": "modify",
+          "description": "Wire HistoryPage to history React Query hooks with loading/error/empty handling and user-friendly error messages for authorization traps."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Include generated static branding assets (logo + hero illustration) and render them in the UI from static files.",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend (not served via backend).",
+        "The app shows the logo in the header and uses the hero illustration on the landing/selection area."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/app-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo asset at frontend/public/assets/generated/app-logo.dim_512x512.png for static use by the frontend."
+        },
+        {
+          "path": "frontend/public/assets/generated/hero-illustration.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated hero illustration asset at frontend/public/assets/generated/hero-illustration.dim_1600x600.png for static use by the frontend."
+        },
+        {
+          "path": "frontend/src/components/Branding.tsx",
+          "operation": "create",
+          "description": "Create a small branding component that renders the static logo (frontend/public/assets/generated/app-logo.dim_512x512.png) in the header and the hero illustration (frontend/public/assets/generated/hero-illustration.dim_1600x600.png) in the solver landing/selection area."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Branding into the header (logo) and the landing/selection area (hero illustration), ensuring assets are referenced as static public files."
+        }
+      ]
+    }
+  ]
+}

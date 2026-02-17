@@ -1,0 +1,287 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T22:25:42.363Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 9,
+    "implemented": 8,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create a multi-tool calculator UI that lets users choose between Math, Physics, and Chemistry solvers and enter problems using structured inputs (forms) and/or a free-text prompt, then shows a step-by-step solution and a final answer.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/ModeSelector.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx",
+          "frontend/src/components/inputs/MathSolverForm.tsx",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/components/common/States.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/ModeSelector.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx",
+          "frontend/src/components/inputs/MathSolverForm.tsx",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/components/common/States.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement backend solver APIs in the single Motoko actor to support: (a) math expression evaluation, (b) physics formula solvers for common topics, and (c) chemistry solvers for common topics; each response must include structured steps suitable for step-by-step rendering.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Math solver: support arithmetic, parentheses, exponents, common functions (sin, cos, tan, log, ln, sqrt), constants (pi, e), and produce a step-by-step breakdown (tokenization/parse summary + evaluation steps).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/results/MathSteps.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx",
+          "frontend/src/components/inputs/MathSolverForm.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/results/MathSteps.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx",
+          "frontend/src/components/inputs/MathSolverForm.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Physics solver tools: provide structured form-based solvers for at least the following topics with step-by-step derivations and unit-aware outputs: kinematics (v, a, t, s), Newton’s second law (F=m*a), work/energy (W=F*d, KE=1/2 m v^2), power (P=W/t), and Ohm’s law (V=I*R).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/inputs/physics/physicsTopics.ts",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/inputs/physics/physicsTopics.ts",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Chemistry solver tools: provide structured form-based solvers for at least the following with step-by-step reasoning: molar mass calculator, moles/mass conversion, solution molarity (M=n/V), dilution (C1V1=C2V2), ideal gas law (PV=nRT), and pH/pOH (basic formulas).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/components/results/SolutionPanel.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Add calculation history: store each authenticated user’s solved problems (mode, inputs, timestamp, final answer) and let users view, re-run, and delete history items.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/auth/AuthGate.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/pages/HistoryPage.tsx",
+          "frontend/src/components/history/HistoryList.tsx",
+          "frontend/src/components/history/historySummary.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/auth/AuthGate.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/components/auth/LoginButton.tsx",
+          "frontend/src/pages/HistoryPage.tsx",
+          "frontend/src/components/history/HistoryList.tsx",
+          "frontend/src/components/history/historySummary.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Create a coherent visual theme for the entire app (consistent colors, typography, spacing, and component styling) that feels like a modern scientific tool (not blue/purple), and apply it consistently across all screens and states (loading, error, empty).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/common/States.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/common/States.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Frontend data flow: use React Query for solver requests (math/physics/chemistry + history CRUD), with clear loading indicators, error handling, and input validation before submission.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/api/solver.ts",
+          "frontend/src/api/history.ts",
+          "frontend/src/components/inputs/MathSolverForm.tsx",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/pages/HistoryPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/inputs/MathSolverForm.tsx",
+          "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+          "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+          "frontend/src/pages/HistoryPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Generate and include basic static branding assets: an app logo and a hero/header illustration matching the scientific-calculator theme, and render them in the UI from static assets.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/assets/generated/app-logo.dim_512x512.png",
+          "frontend/public/assets/generated/hero-illustration.dim_1600x600.png",
+          "frontend/src/components/Branding.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/public/assets/generated/app-logo.dim_512x512.png",
+          "frontend/public/assets/generated/hero-illustration.dim_1600x600.png",
+          "frontend/src/components/Branding.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/app-logo.dim_512x512.png",
+    "frontend/public/assets/generated/hero-illustration.dim_1600x600.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/Branding.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/ModeSelector.tsx",
+    "frontend/src/components/auth/AuthGate.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/common/States.tsx",
+    "frontend/src/components/history/HistoryList.tsx",
+    "frontend/src/components/history/historySummary.ts",
+    "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+    "frontend/src/components/inputs/MathSolverForm.tsx",
+    "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+    "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+    "frontend/src/components/inputs/physics/physicsTopics.ts",
+    "frontend/src/components/results/MathSteps.tsx",
+    "frontend/src/components/results/SolutionPanel.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/HistoryPage.tsx",
+    "frontend/src/pages/SolverPage.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

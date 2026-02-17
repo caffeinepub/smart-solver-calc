@@ -1,0 +1,121 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T22:25:42.360Z",
+  "summary": "Diff adds a new Motoko backend actor with authorization/profile/history scaffolding and a React frontend with Math/Physics/Chemistry solver UI, React Query wiring, and history views. However, several core solver API response-shape requirements (string finalAnswer, string steps, computed-values payload) and specific chemistry/molar-mass input handling are not evidenced, and some extra features (user profiles, admin token init, caffeine.ai footer link) appear unrequested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Each solver response must include finalAnswer (string), steps (array of strings), and a structured data payload for computed values (key/value pairs).",
+      "reason": "Backend types shown return finalAnswer as an Answer record containing a Float (not a string) and steps as an array of Step records (not strings). No computed-values key/value payload is present in the result type.",
+      "evidence": [
+        "backend/main.mo (CalculationResult.Result, Answer.Answer, SolverStep.Step types)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Math solver must support functions (sin, cos, tan, log, ln, sqrt), constants (pi, e), and return step-by-step breakdown including parse/tokenization summary and evaluation steps.",
+      "reason": "Frontend advertises these features, but the diff does not show any backend math parser/evaluator implementation or any explicit step structure containing tokenization/parse summary; backend file is truncated before solver logic is shown.",
+      "evidence": [
+        "frontend/src/components/inputs/MathSolverForm.tsx (claims functions/constants)",
+        "backend/main.mo (truncated; no solver implementation visible)"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Physics solver must be topic-based and allow solving for any one variable with unit-aware outputs and steps including formula, substitution, and computation.",
+      "reason": "Frontend has a topic selector and 'solve for' UI, but the backend input format shown does not include a solveFor variable explicitly and the frontend sends a placeholder ['solveFor', 0] rather than the selected variable, so the required 'solve for any one variable' behavior is not evidenced.",
+      "evidence": [
+        "frontend/src/components/inputs/PhysicsSolverForm.tsx (solveFor state; sends inputValues.push(['solveFor', 0]))",
+        "backend/main.mo (PhysicsProblem input is values : [(Text, Float)] only; no solveFor field shown)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Chemistry molar mass supports common element symbols and computes total molar mass for a chemical formula (e.g., H2O, CO2, NaCl) with validation errors for invalid chemical formula.",
+      "reason": "Frontend chemistry form collects a formula as text, but converts text fields into a dummy numeric entry (pushes ['formula', 0]) because backend values are [(Text, Float)], so actual formula parsing/validation and molar mass computation are not evidenced.",
+      "evidence": [
+        "frontend/src/components/inputs/chemistry/chemistryTopics.ts (formula is type 'text')",
+        "frontend/src/components/inputs/ChemistrySolverForm.tsx (stores formula as special numeric code; inputValues.push(['formula', 0]))",
+        "backend/main.mo (ChemistryProblem values : [(Text, Float)] only)"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Result area renders (1) final answer, (2) step-by-step explanation, and (3) any intermediate computed values used.",
+      "reason": "SolutionPanel renders final answer and steps, but no separate rendering of a structured intermediate computed-values payload is present.",
+      "evidence": [
+        "frontend/src/components/results/SolutionPanel.tsx (renders final answer + steps only)"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend (logo and hero illustration).",
+      "reason": "Frontend references the logo path, but the diff summary does not show the actual image files being added, and no hero illustration usage is shown in provided files.",
+      "evidence": [
+        "frontend/src/components/Branding.tsx (references /assets/generated/app-logo.dim_512x512.png)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile setup and storage (get/save user profile + ProfileSetupDialog)",
+      "reason": "BuildRequest does not ask for user profiles; only history with Internet Identity is required.",
+      "evidence": [
+        "backend/main.mo (UserProfile type; getCallerUserProfile/getUserProfile/saveCallerUserProfile)",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx"
+      ]
+    },
+    {
+      "description": "Admin-token based access-control initialization via URL parameter (caffeineAdminToken) and authorization mixins",
+      "reason": "BuildRequest specifies Internet Identity for authentication but does not request admin-token/secret URL parameter access-control initialization.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts (getSecretParameter('caffeineAdminToken'); _initializeAccessControlWithSecret)",
+        "backend/main.mo (MixinAuthorization, AccessControl usage)"
+      ]
+    },
+    {
+      "description": "Caffeine.ai promotional footer link",
+      "reason": "Not requested; BuildRequest has no requirement for external promotional links.",
+      "evidence": [
+        "frontend/src/components/Footer.tsx (caffeine.ai link with utm params)"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Branding.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/ModeSelector.tsx",
+    "frontend/src/components/auth/AuthGate.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/common/States.tsx",
+    "frontend/src/components/history/HistoryList.tsx",
+    "frontend/src/components/history/historySummary.ts",
+    "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+    "frontend/src/components/inputs/MathSolverForm.tsx",
+    "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+    "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+    "frontend/src/components/inputs/physics/physicsTopics.ts",
+    "frontend/src/components/results/MathSteps.tsx",
+    "frontend/src/components/results/SolutionPanel.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/HistoryPage.tsx",
+    "frontend/src/pages/SolverPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

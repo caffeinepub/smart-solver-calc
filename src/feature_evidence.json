@@ -1,0 +1,181 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-multi-tool-calculator-ui-that-lets-users-choose-between-math-physics-and-chemistry-solvers-and-enter-problems-using-structured-inputs-forms-and-or-a-free-text-prompt-then-shows-a-step-by-step-solution-and-a-final-answer",
+      "featureTitle": "Create a multi-tool calculator UI that lets users choose between Math, Physics, and Chemistry solvers and enter problems using structured inputs (forms) and/or a free-text prompt, then shows a step-by-step solution and a final answer.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ModeSelector.tsx",
+        "frontend/src/components/common/States.tsx",
+        "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+        "frontend/src/components/inputs/MathSolverForm.tsx",
+        "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+        "frontend/src/components/results/SolutionPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-math-solver-support-arithmetic-parentheses-exponents-common-functions-sin-cos-tan-log-ln-sqrt-constants-pi-e-and-produce-a-step-by-step-breakdown-tokenization-parse-summary-evaluation-steps",
+      "featureTitle": "Math solver: support arithmetic, parentheses, exponents, common functions (sin, cos, tan, log, ln, sqrt), constants (pi, e), and produce a step-by-step breakdown (tokenization/parse summary + evaluation steps).",
+      "files": [
+        "frontend/src/components/inputs/MathSolverForm.tsx",
+        "frontend/src/components/results/MathSteps.tsx",
+        "frontend/src/components/results/SolutionPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-physics-solver-tools-provide-structured-form-based-solvers-for-at-least-the-following-topics-with-step-by-step-derivations-and-unit-aware-outputs-kinematics-v-a-t-s-newton-s-second-law-f-m-a-work-energy-w-f-d-ke-1-2-m-v-2-power-p-w-t-and-ohm-s-law-v-i-r",
+      "featureTitle": "Physics solver tools: provide structured form-based solvers for at least the following topics with step-by-step derivations and unit-aware outputs: kinematics (v, a, t, s), Newton’s second law (F=m*a), work/energy (W=F*d, KE=1/2 m v^2), power (P=W/t), and Ohm’s law (V=I*R).",
+      "files": [
+        "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+        "frontend/src/components/inputs/physics/physicsTopics.ts",
+        "frontend/src/components/results/SolutionPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-chemistry-solver-tools-provide-structured-form-based-solvers-for-at-least-the-following-with-step-by-step-reasoning-molar-mass-calculator-moles-mass-conversion-solution-molarity-m-n-v-dilution-c1v1-c2v2-ideal-gas-law-pv-nrt-and-ph-poh-basic-formulas",
+      "featureTitle": "Chemistry solver tools: provide structured form-based solvers for at least the following with step-by-step reasoning: molar mass calculator, moles/mass conversion, solution molarity (M=n/V), dilution (C1V1=C2V2), ideal gas law (PV=nRT), and pH/pOH (basic formulas).",
+      "files": [
+        "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+        "frontend/src/components/inputs/chemistry/chemistryTopics.ts",
+        "frontend/src/components/results/SolutionPanel.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-calculation-history-store-each-authenticated-user-s-solved-problems-mode-inputs-timestamp-final-answer-and-let-users-view-re-run-and-delete-history-items",
+      "featureTitle": "Add calculation history: store each authenticated user’s solved problems (mode, inputs, timestamp, final answer) and let users view, re-run, and delete history items.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AuthGate.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/components/history/HistoryList.tsx",
+        "frontend/src/components/history/historySummary.ts",
+        "frontend/src/pages/HistoryPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-coherent-visual-theme-for-the-entire-app-consistent-colors-typography-spacing-and-component-styling-that-feels-like-a-modern-scientific-tool-not-blue-purple-and-apply-it-consistently-across-all-screens-and-states-loading-error-empty",
+      "featureTitle": "Create a coherent visual theme for the entire app (consistent colors, typography, spacing, and component styling) that feels like a modern scientific tool (not blue/purple), and apply it consistently across all screens and states (loading, error, empty).",
+      "files": [
+        "frontend/src/components/common/States.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-data-flow-use-react-query-for-solver-requests-math-physics-chemistry-history-crud-with-clear-loading-indicators-error-handling-and-input-validation-before-submission",
+      "featureTitle": "Frontend data flow: use React Query for solver requests (math/physics/chemistry + history CRUD), with clear loading indicators, error handling, and input validation before submission.",
+      "files": [
+        "frontend/src/components/inputs/ChemistrySolverForm.tsx",
+        "frontend/src/components/inputs/MathSolverForm.tsx",
+        "frontend/src/components/inputs/PhysicsSolverForm.tsx",
+        "frontend/src/pages/HistoryPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-generate-and-include-basic-static-branding-assets-an-app-logo-and-a-hero-header-illustration-matching-the-scientific-calculator-theme-and-render-them-in-the-ui-from-static-assets",
+      "featureTitle": "Generate and include basic static branding assets: an app logo and a hero/header illustration matching the scientific-calculator theme, and render them in the UI from static assets.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Branding.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

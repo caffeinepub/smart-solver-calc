@@ -1,0 +1,184 @@
+{
+  "kind": "build_request",
+  "title": "Smart calculator with physics and chemistry solver tools (step-by-step)",
+  "projectName": "Smart Solver Calc",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a multi-tool calculator UI that lets users choose between Math, Physics, and Chemistry solvers and enter problems using structured inputs (forms) and/or a free-text prompt, then shows a step-by-step solution and a final answer.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create an smart ai calculator apps with physics and chemistry solver tools"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The home screen offers three clear modes: Math, Physics, Chemistry.",
+        "Each mode provides an input area and a “Solve” action.",
+        "The result area renders: (1) final answer, (2) step-by-step explanation, and (3) any intermediate computed values used.",
+        "User-facing text is in English."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement backend solver APIs in the single Motoko actor to support: (a) math expression evaluation, (b) physics formula solvers for common topics, and (c) chemistry solvers for common topics; each response must include structured steps suitable for step-by-step rendering.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create an smart ai calculator apps with physics and chemistry solver tools"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes typed methods for math, physics, and chemistry solving (separate endpoints or one endpoint with a mode selector).",
+        "Each solver response includes: finalAnswer (string), steps (array of strings), and a structured data payload for computed values (key/value pairs).",
+        "No external AI/LLM services are used; solving is deterministic and runs fully on-canister."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Math solver: support arithmetic, parentheses, exponents, common functions (sin, cos, tan, log, ln, sqrt), constants (pi, e), and produce a step-by-step breakdown (tokenization/parse summary + evaluation steps).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "smart ai calculator apps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can submit expressions like \"(2+3)*4^2\" and receive a correct final result.",
+        "User can submit expressions like \"sqrt(16)+sin(pi/2)\" and receive a correct final result.",
+        "Returned steps show a clear evaluation sequence (at least: parsed form and key reduction steps).",
+        "Frontend renders math steps in a readable monospaced/code-like style."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Physics solver tools: provide structured form-based solvers for at least the following topics with step-by-step derivations and unit-aware outputs: kinematics (v, a, t, s), Newton’s second law (F=m*a), work/energy (W=F*d, KE=1/2 m v^2), power (P=W/t), and Ohm’s law (V=I*R).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "physics ... solver tools"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Physics mode offers a topic selector and shows only the inputs needed for that topic.",
+        "Users can solve for any one variable when the others are provided (e.g., compute a from F and m; compute t from s, v, a where applicable).",
+        "Outputs include units in the final answer string (e.g., N, m/s^2, J, W, V, A, Ω).",
+        "Steps include the formula used, substitution of numeric values, and the final computation."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Chemistry solver tools: provide structured form-based solvers for at least the following with step-by-step reasoning: molar mass calculator, moles/mass conversion, solution molarity (M=n/V), dilution (C1V1=C2V2), ideal gas law (PV=nRT), and pH/pOH (basic formulas).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "chemistry solver tools"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Chemistry mode offers a topic selector with dedicated inputs per topic.",
+        "Molar mass supports common element symbols and computes total molar mass for a chemical formula (e.g., H2O, CO2, NaCl).",
+        "Molarity/dilution/ideal gas/pH solvers return correct numeric outputs and show steps with formula and substitution.",
+        "Validation errors (missing inputs, invalid chemical formula, invalid numbers) are shown clearly in the UI."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add calculation history: store each authenticated user’s solved problems (mode, inputs, timestamp, final answer) and let users view, re-run, and delete history items.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "calculator apps"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can sign in with Internet Identity and see a “History” view.",
+        "Each history item shows mode + summary + timestamp + final answer.",
+        "Users can re-run a history item to repopulate the solver inputs and re-solve.",
+        "Users can delete individual items and clear all history."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Create a coherent visual theme for the entire app (consistent colors, typography, spacing, and component styling) that feels like a modern scientific tool (not blue/purple), and apply it consistently across all screens and states (loading, error, empty).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is applied consistently across navigation, forms, buttons, and result panels.",
+        "Primary palette is not blue/purple; it reads as “scientific calculator” (e.g., charcoal + lime/amber accents, or graphite + teal-green accents).",
+        "Loading, error, and empty states are styled and visually consistent."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Frontend data flow: use React Query for solver requests (math/physics/chemistry + history CRUD), with clear loading indicators, error handling, and input validation before submission.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Solver requests show a loading state and disable the Solve button while pending.",
+        "Errors from backend are displayed in a user-friendly way and do not crash the app.",
+        "React Query caches the latest successful solution per mode/topic and supports manual re-fetch (Re-solve)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Generate and include basic static branding assets: an app logo and a hero/header illustration matching the scientific-calculator theme, and render them in the UI from static assets.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend (not served via backend).",
+        "The app shows the logo in the header and uses the hero illustration on the landing/selection area."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (no multi-canister backend services).",
+    "Do not use external AI/LLM APIs or third-party services for solving; implement deterministic solvers on-canister.",
+    "Do not edit files under frontend/src/components/ui or other immutable paths if present; only compose/reuse them.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Supporting arbitrary natural-language physics/chemistry word problems beyond the provided topic-based solvers.",
+    "Graphing/calculus CAS features (symbolic differentiation/integration) unless explicitly requested later.",
+    "Real-time collaboration or chat-style interactions.",
+    "Third-party authentication methods other than Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal geometric science-calculator logo mark with subtle math/atom motifs, flat vector style (app-logo.dim_512x512.png)",
+      "Wide hero illustration of a modern scientific calculator workspace with physics and chemistry iconography, clean flat/gradient style (hero-illustration.dim_1600x600.png)"
+    ],
+    "edits": []
+  }
+}

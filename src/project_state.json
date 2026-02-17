@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a smart AI calculator app that solves math plus physics and chemistry problems with step-by-step solutions.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal geometric science-calculator logo mark with subtle math/atom motifs, flat vector style (app-logo.dim_512x512.png)\n- Wide hero illustration of a modern scientific calculator workspace with physics and chemistry iconography, clean flat/gradient style (hero-illustration.dim_1600x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-multi-tool-calculator-ui-that-lets-users-choose-between-math-physics-and-chemistry-solvers-and-enter-problems-using-structured-inputs-forms-and-or-a-free-text-prompt-then-shows-a-step-by-step-solution-and-a-final-answer",
+      "title": "Create a multi-tool calculator UI that lets users choose between Math, Physics, and Chemistry solvers and enter problems using structured inputs (forms) and/or a free-text prompt, then shows a step-by-step solution and a final answer.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-math-solver-support-arithmetic-parentheses-exponents-common-functions-sin-cos-tan-log-ln-sqrt-constants-pi-e-and-produce-a-step-by-step-breakdown-tokenization-parse-summary-evaluation-steps",
+      "title": "Math solver: support arithmetic, parentheses, exponents, common functions (sin, cos, tan, log, ln, sqrt), constants (pi, e), and produce a step-by-step breakdown (tokenization/parse summary + evaluation steps).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-physics-solver-tools-provide-structured-form-based-solvers-for-at-least-the-following-topics-with-step-by-step-derivations-and-unit-aware-outputs-kinematics-v-a-t-s-newton-s-second-law-f-m-a-work-energy-w-f-d-ke-1-2-m-v-2-power-p-w-t-and-ohm-s-law-v-i-r",
+      "title": "Physics solver tools: provide structured form-based solvers for at least the following topics with step-by-step derivations and unit-aware outputs: kinematics (v, a, t, s), Newton’s second law (F=m*a), work/energy (W=F*d, KE=1/2 m v^2), power (P=W/t), and Ohm’s law (V=I*R).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-chemistry-solver-tools-provide-structured-form-based-solvers-for-at-least-the-following-with-step-by-step-reasoning-molar-mass-calculator-moles-mass-conversion-solution-molarity-m-n-v-dilution-c1v1-c2v2-ideal-gas-law-pv-nrt-and-ph-poh-basic-formulas",
+      "title": "Chemistry solver tools: provide structured form-based solvers for at least the following with step-by-step reasoning: molar mass calculator, moles/mass conversion, solution molarity (M=n/V), dilution (C1V1=C2V2), ideal gas law (PV=nRT), and pH/pOH (basic formulas).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-calculation-history-store-each-authenticated-user-s-solved-problems-mode-inputs-timestamp-final-answer-and-let-users-view-re-run-and-delete-history-items",
+      "title": "Add calculation history: store each authenticated user’s solved problems (mode, inputs, timestamp, final answer) and let users view, re-run, and delete history items.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-visual-theme-for-the-entire-app-consistent-colors-typography-spacing-and-component-styling-that-feels-like-a-modern-scientific-tool-not-blue-purple-and-apply-it-consistently-across-all-screens-and-states-loading-error-empty",
+      "title": "Create a coherent visual theme for the entire app (consistent colors, typography, spacing, and component styling) that feels like a modern scientific tool (not blue/purple), and apply it consistently across all screens and states (loading, error, empty).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-data-flow-use-react-query-for-solver-requests-math-physics-chemistry-history-crud-with-clear-loading-indicators-error-handling-and-input-validation-before-submission",
+      "title": "Frontend data flow: use React Query for solver requests (math/physics/chemistry + history CRUD), with clear loading indicators, error handling, and input validation before submission.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-include-basic-static-branding-assets-an-app-logo-and-a-hero-header-illustration-matching-the-scientific-calculator-theme-and-render-them-in-the-ui-from-static-assets",
+      "title": "Generate and include basic static branding assets: an app logo and a hero/header illustration matching the scientific-calculator theme, and render them in the UI from static assets.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Smart AI calculator app with physics and chemistry solver tools that provides step-by-step answers.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Implement backend solver APIs in the single Motoko actor to support: (a) math expression evaluation, (b) physics formula solvers for common topics, and (c) chemistry solvers for common topics; each response must include structured steps suitable for step-by-step rendering.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Smart Solver Calc",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
